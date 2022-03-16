@@ -1,0 +1,170 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model Nhom6_TourDuLich.Models.Custom.PagedListTour
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Tour";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+<head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <style>
+        h3.heading {
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .label1 {
+            font-weight: bold;
+            color: #f85959;
+        }
+
+        .col-lg {
+            -ms-flex-preferred-size: 0;
+            /*sửa by AnhLe*/
+            /*flex-basis: 0;*/
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            /*sửa by AnhLe*/
+            max-width: calc(100%/3);
+        }
+
+        p.shortDescription {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 40px;
+        }
+
+        .container1 {
+            max-width: 95%;
+            margin: 0px auto;
+        }
+
+        select {
+            width: 256px;
+            height: 52px;
+            padding-left: 20px;
+            /*text-align: center;*/
+        }
+    </style>
+</head>
+
+
+<div class="hero-wrap js-fullheight" style="background-image: url('../../wwwroot/images/bg_3.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
+                <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="@Url.Action("Index", "VietTravel")">Trang chủ</a></span> <span>Tour</span></p>
+                <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Điểm đến</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="ftco-section ftco-degree-bg">
+    <div class="container1">
+        <div class="row">
+            <div class="col-lg-3 sidebar ftco-animate">
+                <div class="sidebar-wrap bg-light ftco-animate">
+                    <h3 class="heading mb-4">TÌM KIẾM TOUR</h3>
+                    <hr />
+                    @using (Html.BeginForm("FindListTour", "Tour", FormMethod.Get, new { @class = "" }))
+                    {
+                        <div class="fields">
+                            <div class="form-group">
+                                <label class="label1">Theo danh mục Tour</label>
+                                @Html.DropDownList("IDCategory", null, "-- Chọn --", htmlAttributes: new { @class = "form-control", IDCategory = ViewBag.CategoryName })
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label class="label1">Theo tên Tour</label>
+                                <input type="text" class="form-control" placeholder="Nhập tên Tour cần tìm" name="TourName" value="@ViewBag.tournames">
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label class="label1">Theo khoảng giá Tour</label>
+                                <br />
+                                <label>Từ</label>
+                                <input type="number" class="form-control" placeholder="Nhập giá bắt đầu" name="CostA" min="0" value="@ViewBag.costA">
+                                <label>Đến</label>
+                                <input type="number" class="form-control" placeholder="Nhập giá kết thúc" name="CostB" min="0" value="@ViewBag.costB">
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <input type="submit" value="Tìm kiếm" class="btn btn-primary py-3 px-5">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.Error</div>
+                    }
+                    else
+                    {
+                        foreach (var tour in Model.PageTour)
+                        {
+                            <div class="col-sm col-md-6 col-lg ftco-animate">
+                                <div class="destination">
+                                    <a href="@Url.Action("Details", "Tour", new { id = tour.IDTour })" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../../wwwroot/images/imgTour/@tour.Images);">
+                                        <div class="icon d-flex justify-content-center align-items-center">
+                                            <span class="icon-search2"></span>
+                                        </div>
+                                    </a>
+                                    <div class="text p-3">
+                                        <div class="d-flex">
+                                            <div class="one">
+                                                <h3><a href="@Url.Action("Details", "Tour", new { id = tour.IDTour })">@tour.TourName</a></h3>
+                                            </div>
+                                            <div class="two">
+                                                <span class="price">@String.Format("{0:0,0}", @tour.Cost) VNĐ</span>
+                                            </div>
+                                        </div>
+                                        <p class="shortDescription">@tour.ShortDescription</p>
+                                        <p class="days"><span>@tour.NumberDateTour ngày</span></p>
+                                        <hr>
+                                        <p class="bottom-area d-flex">
+                                            <span><i class="icon-map-o"></i> @tour.CategoryName</span>
+                                            <span class="ml-auto">
+                                                @if (tour.Statuss == "Còn Tour")
+                                                {
+                                                    <a href="@Url.Action("AddCart", "Cart", new { @iIDTour = tour.IDTour })">
+                                                        <i class="fas fa-shopping-cart"></i> Đặt tour
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="#" onclick="alert('Tour đã hết hạn. Không thể đặt!');">
+                                                        <i class="fas fa-shopping-cart"></i> Đặt tour
+                                                    </a>
+                                                }
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <br />
+                <div style="text-align: right">
+                    Trang @(Model.PageTour.PageCount < Model.PageTour.PageNumber ? 0 : Model.PageTour.PageNumber) / @Model.PageTour.PageCount
+                    @Html.PagedListPager(Model.PageTour, page => Url.Action("FindListTour", new { page, IDCategory = ViewBag.CategoryName, TourName = ViewBag.tournames, CostA = ViewBag.costA, CostB = ViewBag.costB }))
+                </div>
+            </div> <!-- .col-md-8 -->
+        </div>
+    </div>
+</section> <!-- .section -->

@@ -1,0 +1,167 @@
+﻿@using Nhom6_TourDuLich.Sessions
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>VietTravel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel='shortcut icon' href='~/wwwroot/images/imgOverView/logo.png' />
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/wwwroot/Client/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="~/wwwroot/Client/css/animate.css">
+
+    <link rel="stylesheet" href="~/wwwroot/Client/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/wwwroot/Client/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/wwwroot/Client/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="~/wwwroot/Client/css/aos.css">
+
+    <link rel="stylesheet" href="~/wwwroot/Client/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="~/wwwroot/Client/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/wwwroot/Client/css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="~/wwwroot/Client/css/flaticon.css">
+    <link rel="stylesheet" href="~/wwwroot/Client/css/icomoon.css">
+    <link rel="stylesheet" href="~/wwwroot/Client/css/style.css">
+
+</head>
+<body>
+    @{
+    var customSession = (UserSession)Session[SessionConnection.CUSTOMER_SESSION];
+    }
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="@Url.Action("Index", "VietTravel")">VietTravel</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active"><a href="@Url.Action("Index","VietTravel")" class="nav-link">Trang chủ</a></li>
+                    <li class="nav-item"><a href="@Url.Action("Tour","Tour")" class="nav-link">Tour</a></li>
+                    <li class="nav-item"><a href="@Url.Action("News","VietTravel")" class="nav-link">Tin tức</a></li>
+                    <li class="nav-item"><a href="@Url.Action("AboutUs", "VietTravel")" class="nav-link">Về chúng tôi</a></li>
+                    @* giỏ hàng *@
+                    <li class="nav-item">
+                        <a href="@Url.Action("Cart", "Cart")" class="nav-link nav-user-img">
+                            <img src="~/wwwroot/images/cart.png" alt="" class="user-avatar-md">
+                        </a>
+                    </li>
+                    <li class="nav-item cta dropdown nav-user">
+                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="~/wwwroot/images/user.png" alt="" class="user-avatar-md rounded-circle"></a>
+                        @if (customSession == null)
+                        {
+                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                                <a class="dropdown-item" href="@Url.Action("Login","Users")"><i class="fas fa-user mr-2"></i>Đăng nhập</a>
+                                <a class="dropdown-item" href="@Url.Action("Register","Users")"><i class="fas fa-cog mr-2"></i>Đăng ký</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                                <a class="dropdown-item" href="@Url.Action("Logout","Users")"><i class="fas fa-sign-out-alt"></i>  Đăng xuất</a>
+                            </div>
+
+                        }
+                    </li>
+                    <li class="nav-item"><span class="nav-link">@if (customSession != null){@customSession.FullName}</span></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @RenderBody()
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">VietTravel</h2>
+                        <p>Cuộc hành trình ngàn dặm bắt đầu từ một bước chân nhỏ bé.</p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4 ml-md-5">
+                        <h2 class="ftco-heading-2">Thông tin</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="py-2 d-block">Về chúng tôi</a></li>
+                            <li><a href="#" class="py-2 d-block">Dịch vụ</a></li>
+                            <li><a href="#" class="py-2 d-block">Tin tức</a></li>
+                            <li><a href="#" class="py-2 d-block">Điều khoản & Điều kiện</a></li>
+                            <li><a href="#" class="py-2 d-block">Quyền riêng tư & Chính sách</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Hỗ trợ khách hàng</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="py-2 d-block">Phương thức thanh toán</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Liên hệ</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="icon icon-map-marker"></span><span class="text">298 Đường Cầu Diễn, Minh Khai, Bắc Từ Liêm, Hà Nội</span></li>
+                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">nhom6@haui.com</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+
+                    <p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> Nhóm SV Trường Đại Học Công Nghiệp Hà Nội
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+
+
+    <script src="~/wwwroot/Client/js/jquery.min.js"></script>
+    <script src="~/wwwroot/Client/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="~/wwwroot/Client/js/popper.min.js"></script>
+    <script src="~/wwwroot/Client/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/Client/js/jquery.easing.1.3.js"></script>
+    <script src="~/wwwroot/Client/js/jquery.waypoints.min.js"></script>
+    <script src="~/wwwroot/Client/js/jquery.stellar.min.js"></script>
+    <script src="~/wwwroot/Client/js/owl.carousel.min.js"></script>
+    <script src="~/wwwroot/Client/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/wwwroot/Client/js/aos.js"></script>
+    <script src="~/wwwroot/Client/js/jquery.animateNumber.min.js"></script>
+    <script src="~/wwwroot/Client/js/bootstrap-datepicker.js"></script>
+    <script src="~/wwwroot/Client/js/jquery.timepicker.min.js"></script>
+    <script src="~/wwwroot/Client/js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="~/wwwroot/Client/js/google-map.js"></script>
+    <script src="~/wwwroot/Client/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+﻿@model PagedList.IPagedList<Nhom6_TourDuLich.Models.Category>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Danh sách danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section Messages{
+    <script>
+        setTimeout(function () {
+            $('#message').fadeOut('slow');
+        }, 2000);
+    </script>
+    <script>
+        setTimeout(function () {
+            $('#error').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+<h2>Danh sách danh mục</h2>
+<div class="row">
+    <p class="col-md-6">
+        @Html.ActionLink("Thêm mới", "Create", "Categories", null, new { @class = "btn btn-primary" })
+    </p>
+    @using (Html.BeginForm(new { @class = "col-md-6" }))
+    {
+        <p>
+            Tìm danh mục: @Html.TextBox("searchName", ViewBag.currentName as string, new { @class = "m-2 p-2 ", placeholder = "Nhập tên danh mục" })
+            <input type="submit" value="Tìm" class="btn btn-outline-primary" />
+        </p>
+        if (@ViewBag.ErrorFind != null)
+        {
+            <div class="alert alert-danger" role="alert">@ViewBag.ErrorFind</div>
+        }
+
+    }
+</div>
+
+
+<div class="row">
+    <!-- ============================================================== -->
+    <!-- data table  -->
+    <!-- ============================================================== -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    @if (ViewBag.Message != null)
+                    {
+                        <div id="message" class="alert alert-success" role="alert">
+                            @ViewBag.Message
+                        </div>
+                    }
+                    @if (ViewBag.ErrorDelete != null)
+                    {
+                        <div id="error" class="alert alert-danger" role="alert">
+                            @ViewBag.ErrorDelete
+                        </div>
+                    }
+                </div>
+                <div class="table-responsive">
+                    <table id="example" class="table table-striped table-bordered second" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    @Html.ActionLink("Tên danh mục", "Index", new { sortOrder = ViewBag.sxTheoTen, currentName = ViewBag.currentName })
+                                </th>
+                                <th class="text-center">
+                                    Số lượng
+                                </th>
+                                <th class="text-center">
+                                    Hình ảnh
+                                </th>
+                                <th class="text-center">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CategoryName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                    <td>
+                                        @{
+                                            string ImagePath = "~/wwwroot/images/imgCategory/" + item.Images;
+                                        }
+                                        <img src="@Url.Content(ImagePath)" width="100" class="img-responsive mx-auto d-block" />
+                                        <br />
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("Edit","Categories",new { id = item.IDCategory })" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                        <a href="@Url.Action("Details","Categories",new { id = item.IDCategory })" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                        <a href="@Url.Action("Delete","Categories",new { id = item.IDCategory })" onclick="return confirm('Bạn có chắc chắn muốn xóa Danh mục này không?');" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br />
+                    <div style="text-align:right">
+                        Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentName = ViewBag.currentName }))
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end data table  -->
+    <!-- ============================================================== -->
+</div>

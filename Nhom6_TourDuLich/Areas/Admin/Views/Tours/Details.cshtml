@@ -1,0 +1,79 @@
+﻿@model Nhom6_TourDuLich.Models.Tour
+
+@{
+    ViewBag.Title = "Chi tiết Tour";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chi tiết Tour</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="table-responsive">
+
+                <table class="table">
+                    <tr>
+                        <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.Category.CategoryName):</td>
+                        <td>@Html.DisplayFor(model => model.Category.CategoryName)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.TourName):</td>
+                        <td>@Html.DisplayFor(model => model.TourName)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.Addresss):</td>
+                        <td>@Html.DisplayFor(model => model.Addresss)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.Cost):</td>
+                        <td>@String.Format("{0:0,0}", Model.Cost)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: bold;"> @Html.DisplayNameFor(model => model.Images):</td>
+                        <td>
+                                @{
+                                    string ImagePath = "~/wwwroot/images/imgTour/" + Model.Images;
+                                }
+                                <img src="@Url.Content(ImagePath)" width="100" class="img-thumbnail" />
+                                <br />
+                                @Html.DisplayFor(model => model.Images)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.Statuss):</td>
+                        <td>@Html.DisplayFor(model => model.Statuss)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: bold;"> @Html.DisplayNameFor(model => model.ShortDescription):</td>
+                        <td>@Html.DisplayFor(model => model.ShortDescription)</td>
+                    </tr>
+
+                    <tr>
+                        <td width="20%" style="font-weight: bold;">@Html.DisplayNameFor(model => model.DetailDescription):</td>
+                        <td>@Html.DisplayFor(model => model.DetailDescription)</td>
+                    </tr>
+
+                    <tr>
+                        <td width="20%" style="font-weight: bold;">@Html.DisplayNameFor(model => model.NumberDateTour):</td>
+                        <td>@Html.DisplayFor(model => model.NumberDateTour)</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            @Html.ActionLink("Quay lại", "Index", "Tours", null, new { @class = "btn btn-danger" })
+                            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDTour }, new { @class = "btn btn-warning" })
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+           

@@ -1,0 +1,93 @@
+﻿@model Nhom6_TourDuLich.Models.Custom.RegisterModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VietTravel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/wwwroot/Client/css/style.css">
+    <style>
+        .error {
+            height: 20px;
+            /*font-weight: bold;*/
+            color: red;
+            padding: 0px 50px;
+            font-size: 12pt;
+        }
+    </style>
+</head>
+<body>
+    <!-- partial:index.partial.html -->
+    <div class="container">
+        <!-- Heading -->
+        <h1><b>Đăng ký</b></h1>
+        @if (ViewBag.ErrorInsert != null)
+        {
+            <h4 style="text-align:center; color:red" class="alert alert-danger" role="alert">@ViewBag.ErrorInsert</h4>
+        }
+        <!-- Form -->
+        @using (Html.BeginForm("Register", "Users", FormMethod.Post, new { @class = "text-start" }))
+        {
+            @Html.AntiForgeryToken()
+            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+
+            <!-- họ và tên -->
+            <div class="input__block">
+                @Html.TextBoxFor(m => m.FullName, new { @class = "input", @autofocus = "", @placeholder = "Họ và tên" })
+                <div class="error">@Html.ValidationMessageFor(m => m.FullName)</div>
+            </div>
+            <!-- tên đăng nhập -->
+            <div class="input__block">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "input", @autofocus = "", @placeholder = "Tên đăng nhập" })
+                <div class="error">@Html.ValidationMessageFor(m => m.UserName)</div>
+            </div>
+            <!-- mật khẩu -->
+            <div class="input__block">
+                @Html.PasswordFor(m => m.Passwords, new { @class = "input", @autofocus = "", @placeholder = "Mật khẩu" })
+                <div class="error">@Html.ValidationMessageFor(m => m.Passwords)</div>
+            </div>
+            <!-- mật khẩu nhập lại -->
+            <div class="input__block">
+                <input type="password" class="input" name="RePasswords" placeholder="Xác nhận mật khẩu" />
+                <div class="error">@Html.ValidationMessage("RePasswords")</div>
+            </div>
+            <!-- email -->
+            <div class="input__block">
+                @Html.TextBoxFor(m => m.Email, new { @class = "input", @autofocus = "", @placeholder = "Email" })
+                <div class="error">@Html.ValidationMessageFor(m => m.Email)</div>
+            </div>
+            <!-- số điện thoại -->
+            <div class="input__block">
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "input", @autofocus = "", @placeholder = "Số điện thoại" })
+                <div class="error">@Html.ValidationMessageFor(m => m.PhoneNumber)</div>
+            </div>
+            <!-- sign in button -->
+            <button class="signin__btn">
+                <strong>Đăng ký</strong>
+            </button>
+        }
+        <!-- separator -->
+        <div class="separator">
+            <p>Hoặc</p>
+        </div>
+        <!-- google button -->
+        <button class="google__btn">
+            <a href="@Url.Action("Login","Users")">Bạn đã có tài khoản? <strong>Đăng nhập</strong></a>
+        </button>
+        <!-- google button -->
+        <button class="github__btn">
+            <a href="@Url.Action("Index","VietTravel")"><i class="fas fa-arrow-left"></i> <strong>Về trang chủ</strong></a>
+        </button>
+    </div>
+
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'>
+
+    </script>
+    <script src="~/wwwroot/Client/js/main.js"></script>
+
+</body>
+</html>
+
+

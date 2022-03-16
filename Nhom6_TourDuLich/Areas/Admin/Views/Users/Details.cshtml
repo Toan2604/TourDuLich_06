@@ -1,0 +1,70 @@
+﻿@model Nhom6_TourDuLich.Models.User
+
+@{
+    ViewBag.Title = "Chi tiết tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chi tiết tài khoản</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.UserName):</td>
+                        <td>@Html.DisplayFor(model => model.UserName)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.FullName):</td>
+                        <td>@Html.DisplayFor(model => model.FullName)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.Email):</td>
+                        <td>@Html.DisplayFor(model => model.Email)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.PhoneNumber):</td>
+                        <td>@Html.DisplayFor(model => model.PhoneNumber)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.Passwords):</td>
+                        <td>@Html.DisplayFor(model => model.Passwords)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.Roles):</td>
+
+                        @if (Model.Roles == 1)
+                        {
+                            <td>Admin</td>
+
+                        }
+                        else if (Model.Roles == 0)
+                        {
+                            <td>User</td>
+
+                        }
+                        else if (Model.Roles == -1)
+                        {
+                            <td>Vô hiệu hóa</td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            @Html.ActionLink("Quay lại", "Index", "Users", null, new { @class = "btn btn-danger" })
+                            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDUser }, new { @class = "btn btn-warning" })
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

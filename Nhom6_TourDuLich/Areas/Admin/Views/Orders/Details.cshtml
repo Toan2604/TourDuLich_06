@@ -1,0 +1,94 @@
+﻿@model Nhom6_TourDuLich.Areas.Admin.Data.ViewModel
+
+@{
+    ViewBag.Title = "Chi tiết đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chi tiết đơn hàng</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <table border="0" cellpadding="0" cellspacing="0" class="mt-3">
+                <tr class="col-md-6">
+                    <td style="width:20%; font-weight:bold" class="col-md-3">Tên khách hàng:</td>
+                    <td class="col-md-9">@Model.user.FullName</td>
+                </tr>
+                <tr class="col-md-6">
+                    <td style="width:20%; font-weight:bold" class="col-md-3">Mã số Order:</td>
+                    <td class="col-md-9">@Model.order.IDOrder</td>
+                </tr>
+                <tr class="col-md-6">
+                    <td style="width:20%; font-weight:bold" class="col-md-3">Số điện thoại:</td>
+                    <td class="col-md-9">@Model.user.PhoneNumber</td>
+                </tr>
+                <tr class="col-md-6">
+                    <td style="width:20%; font-weight:bold" class="col-md-3">Ngày đặt:</td>
+                    <td class="col-md-9">@String.Format("{0:dd/MM/yyyy}", Model.order.BookingDate)</td>
+                </tr>
+                <tr class="col-md-6">
+                    <td style="width:20%; font-weight:bold" class="col-md-3">Email:</td>
+                    <td class="col-md-9">@Model.user.Email</td>
+                </tr>
+            </table>
+            <br />
+            <table class="table">
+                <tr>
+                    <th class="text-center">Số TT</th>
+                    <th class="text-center">Tên tour</th>
+                    <th class="text-center">Hình ảnh</th>
+                    <th class="text-center">Số lượng</th>
+                    <th class="text-center">Phương thức thanh toán</th>
+                    <th class="text-center">Đơn giá</th>
+                    <th class="text-center">Thành tiền</th>
+                    <th class="text-center">Ghi chú</th>
+                </tr>
+                @{
+                    double tongtien = 0;
+                    int index = 0;
+                }
+                @foreach (var item in ViewBag.DataBill)
+                {
+                    index++;
+                    tongtien += (Convert.ToDouble(@item.bill.Quantity) * Convert.ToDouble(@item.tour.Cost));
+                    <tr>
+                        <td>@index</td>
+                        <td>@item.tour.TourName</td>
+                        <td>
+                            @{
+                                string ImagePath = "~/wwwroot/images/imgTour/" + item.tour.Images;
+                            }
+                            <img src="@Url.Content(ImagePath)" width="100" class="img-thumbnail" />
+                            <br />
+                        </td>
+                        <td>@item.bill.Quantity</td>
+                        <td>@item.bill.PaymentMethod</td>
+
+                        <td>@String.Format("{0:0,0}", item.tour.Cost)</td>
+                        <td>@String.Format("{0:0,0}", item.Thanhtien)</td>
+                        <td>@item.bill.Note</td>
+                    </tr>
+                }
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Tổng tiền</th>
+                    <th colspan="2"><text>@String.Format("{0:0,0}", tongtien) VNĐ</text></th>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.ActionLink("Quay lại", "Index", "Orders", null, new{@class = "btn btn-danger ml-2"})
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+

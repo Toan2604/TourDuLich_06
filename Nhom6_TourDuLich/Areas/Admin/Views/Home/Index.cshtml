@@ -1,0 +1,141 @@
+﻿@model  IEnumerable<Nhom6_TourDuLich.Models.Tour>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Trang chủ</h2>
+
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-info pl-4">
+            <div class="inner pt-2">
+                <h3>@ViewBag.order</h3>
+                <p style="color:white;">Đặt tour</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <a style="color: black" href="@Url.Action("Index","Orders")" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning pl-4">
+            <div class="inner pt-2">
+                <h3>@ViewBag.user</h3>
+                <p style="color:white;">Tài khoản đăng ký</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user"></i>
+            </div>
+            <a style="color: black" href="@Url.Action("Index","Users")" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger pl-4">
+            <div class="inner pt-2">
+                <h3>@ViewBag.cate</h3>
+                <p style="color:white;">Danh mục</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-list"></i>
+            </div>
+            <a style="color: black" href="@Url.Action("Index","Categories")" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success pl-4">
+            <div class="inner pt-2">
+                <h3>@ViewBag.tour</h3>
+                <p style="color:white;">Tours</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-list"></i>
+            </div>
+            <a style="color: black" href="@Url.Action("Index","Tours")" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+<h2 class="mt-5"> Các tour được đặt nhiều nhất</h2>
+<div class="row">
+    <!-- ============================================================== -->
+    <!-- data table  -->
+    <!-- ============================================================== -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example" class="table table-striped table-bordered second" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    Tên tour
+                                </th>
+                                <th class="text-center">
+                                    Tên danh mục
+                                </th>
+
+                                <th class="text-center">
+                                    Giá
+                                </th>
+                                <th class="text-center">
+                                    Hình ảnh
+                                </th>
+                                <th class="text-center">
+                                    Tình trạng
+                                </th>
+                                <th class="text-center">
+                                    Số lượt đặt
+                                </th>
+
+                                <th class="text-center">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TourName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                                    </td>
+
+                                    <td>
+                                        @String.Format("{0:0,0}", item.Cost)
+                                    </td>
+                                    <td class="text-center">
+                                        @{
+                                            string ImagePath = "~/wwwroot/images/imgTour/" + item.Images;
+                                        }
+                                        <img src="@Url.Content(ImagePath)" width="100" class="img-thumbnail" />
+                                        <br />
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Statuss)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NumberBooked)
+                                    </td>
+
+                                    <td>
+                                        <a href="@Url.Action("Details","Tours",new { id = item.IDTour })" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end data table  -->
+    <!-- ============================================================== -->
+</div>
+
+

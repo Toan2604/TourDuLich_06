@@ -1,0 +1,160 @@
+﻿@model IEnumerable<Nhom6_TourDuLich.Models.Category>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    var listCategory = Model.Where(x => x.StatusDelete == 1 && x.Quantity > 0).ToList();
+}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<div class="hero-wrap js-fullheight" style="background-image: url('../../wwwroot/images/bg_1.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+            <div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }" style="margin: -65px -250px 0px 0px !important; ">
+                    <strong>Khám phá <br></strong>điểm đến du lịch tuyệt vời
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section services-section bg-light">
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services d-block text-center">
+                    <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-guarantee"></span></div></div>
+                    <div class="media-body p-2 mt-2">
+                        <h3 class="heading mb-3">Đảm bảo giá ưu đãi</h3>
+                        <p>Cập nhật nhiều Tour du lịch với giá ưu đãi cho khách hàng.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services d-block text-center">
+                    <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-like"></span></div></div>
+                    <div class="media-body p-2 mt-2">
+                        <h3 class="heading mb-3">Điểm đến du lịch yêu thích</h3>
+                        <p>Cập nhật nhiều Tour được yêu thích nhất hiện tại.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services d-block text-center">
+                    <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-detective"></span></div></div>
+                    <div class="media-body p-2 mt-2">
+                        <h3 class="heading mb-3">Nhà cung cấp dịch vụ du lịch hàng đầu</h3>
+                        <p>Cung cấp dịch vụ tốt nhất cho khách hàng.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services d-block text-center">
+                    <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-support"></span></div></div>
+                    <div class="media-body p-2 mt-2">
+                        <h3 class="heading mb-3">Dịch vụ hỗ trợ tận tâm</h3>
+                        <p>Hỗ trợ khách hàng mọi lúc mọi nơi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-destination">
+    <div class="container">
+        <div class="row justify-content-start mb-5 pb-3">
+            <!-- có thể thêm class ="update1" để sửa font-family -->
+            <div class="col-md-7 heading-section ftco-animate">
+                <span class="subheading">DANH MỤC</span>
+                <h2 class="mb-4"><strong>DANH MỤC TOUR DU LỊCH</strong></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="destination-slider owl-carousel ftco-animate">
+
+                    @foreach (var category in listCategory)
+                    {
+                        <div class="item">
+                            <div class="destination">
+                                <a href="@Url.Action("TourByCategory", "Tour", new { @idCategory= category.IDCategory })" class="img d-flex justify-content-center align-items-center" style="background-image: url(../../wwwroot/images/imgCategory/@category.Images);">
+                                    <div class="icon d-flex justify-content-center align-items-center">
+                                        <span class="icon-search2"></span>
+                                    </div>
+                                </a>
+                                <div class="text p-3">
+                                    <h3><a href="@Url.Action("TourByCategory", "Tour", new { @idCategory= category.IDCategory })">@category.CategoryName</a></h3>
+                                    <span class="listing">@category.Quantity Tours</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row justify-content-start mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate">
+                <span class="subheading">NỔI BẬT</span>
+                <h2 class="mb-4"><strong>ĐIỂM ĐẾN NỔI BẬT</strong></h2>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+
+            @foreach (var tour in ViewBag.tour)
+            {
+                <div class="col-sm col-md-6 col-lg ftco-animate">
+                    <div class="destination">
+                        <a href="@Url.Action("Details", "Tour", new { id = tour.IDTour })" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../../wwwroot/images/imgTour/@tour.Images);">
+                            <div class="icon d-flex justify-content-center align-items-center">
+                                <span class="icon-search2"></span>
+                            </div>
+                        </a>
+                        <div class="text p-3">
+                            <div class="d-flex">
+                                <div class="one">
+                                    <h3><a href="@Url.Action("Details", "Tour", new { id = tour.IDTour })">@tour.TourName</a></h3>
+                                </div>
+                                <div class="two">
+                                    <span class="price">@String.Format("{0:0,0}", @tour.Cost) VNĐ</span>
+                                </div>
+                            </div>
+                            <p class="shortDescription">@tour.ShortDescription</p>
+                            <p class="days"><span>@tour.NumberDateTour ngày</span></p>
+                            <hr>
+                            <p class="bottom-area d-flex">
+                                <span><i class="icon-map-o"></i> @tour.CategoryName</span>
+                                <span class="ml-auto">
+                                    @if (tour.Statuss == "Còn Tour")
+                                    {
+                                        <a href="@Url.Action("AddCart", "Cart", new { @iIDTour = tour.IDTour })">
+                                            <i class="fas fa-shopping-cart"></i> Đặt tour
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" onclick="alert('Tour đã hết hạn. Không thể đặt!');">
+                                            <i class="fas fa-shopping-cart"></i> Đặt tour
+                                        </a>
+                                    }
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,76 @@
+﻿@model Nhom6_TourDuLich.Models.News
+
+@{
+    ViewBag.Title = "Chỉnh sửa tin tức";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var ImagePath = "~/wwwroot/images/imgNew/" + Model.Images;
+}
+
+<h2>Chỉnh sửa tin tức</h2>
+
+
+@using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.IDNews)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <img id="output" class="img-rounded" alt="Hình ảnh" width="180" height="200" src="@Url.Content(@ImagePath)" />
+                        <p>
+                            <label for="ufile" style="cursor:pointer;">Chọn file ảnh</label>
+                        </p>
+                        <input name="ImageFile" id="ufile" type="file" style="display:none;" onchange="loadFile(event)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Descriptions, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Descriptions, new { @class = "form-control", rows = 5 })
+                        @Html.ValidationMessageFor(model => model.Descriptions, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.Descriptions, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Descriptions, new { htmlAttributes = new { @class = "form-control", rows = 5 } })
+                            @Html.ValidationMessageFor(model => model.Descriptions, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.ActionLink("Quay lại", "Index", "News", null, new { @class = "btn btn-danger" })
+                        <input type="submit" value="Lưu" class="btn btn-primary" />
+                        @if (ViewBag.ErrorUpdate != null)
+                        {
+                            <br />
+                            <div class="alert alert-danger" role="alert">@ViewBag.ErrorUpdate</div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    var loadFile = function (event) {
+        var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>

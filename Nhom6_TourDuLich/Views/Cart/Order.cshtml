@@ -1,0 +1,162 @@
+﻿@model List<Nhom6_TourDuLich.Models.Custom.Cart>
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VietTravel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/wwwroot/Client/css/style.css">
+    <style type="text/css">
+        .cart {
+            width: 90%;
+            margin: 10% auto;
+            min-height: 700px;
+            vertical-align: middle;
+        }
+
+        .Del-All {
+            color: black !important;
+        }
+
+            .fa-eye:hover, .fa-pen:hover, .fa-trash:hover, .Del-All:hover {
+                color: red !important;
+            }
+
+        .button {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .btn-back a, .btn-next a {
+            background: #8bc34a;
+            color: #FFF;
+            border-radius: 5px;
+            height: 35px;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+            .btn-back a:hover, .btn-next a:hover {
+                background: #FFF;
+                color: #8bc34a;
+            }
+
+        #btn-next:hover {
+            background: #FFF !important;
+            color: #8bc34a !important;
+        }
+        /*.btn-delete-all {
+            text-align: right;
+            font-weight: bold;
+            color: blue !important;
+        }*/
+        .imgTour {
+            width: 300px;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cart">
+        <h2 style="text-align: center">THÔNG TIN TOUR</h2>
+        <table class="table table-hover table-condensed" align="center" cellpadding="0" cellspacing="0" style="font-size:13pt">
+            <tr style="text-align: center; font-weight: bold;">
+                <td colspan="2" style="width: 50%; text-align: center">TÊN TOUR</td>
+                <td style="width: 15%">SỐ LƯỢNG NGƯỜI</td>
+                <td style="width: 10%">ĐƠN GIÁ</td>
+                <td style="width: 15%">THÀNH TIỀN</td>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr style="text-align: center; font-weight: bold; ">
+                    @*<td>@item.iIDTour</td>*@
+                    <td style="vertical-align: middle; display: table-cell;"><img src="~/wwwroot/images/imgTour/@item.sImage" class="imgTour" /></td>
+                    <td style="vertical-align: middle; display: table-cell; text-align: left">@item.sTourName</td>
+                    @using (Html.BeginForm("UpdateCart", "Cart", new { @iMaSP = item.iIDTour }))
+                    {
+                        <td style="vertical-align: middle; display: table-cell;">
+                            <input readonly type="number" name="txtQuantity" value="@item.iQuantity" min="1" style="width: 100%" />
+                        </td>
+                        <td style="vertical-align: middle; display: table-cell;">@String.Format("{0:0,0}", item.iCost)</td>
+                        <td style="vertical-align: middle; display: table-cell;">@String.Format("{0:0,0}", item.iTotal)</td>
+                    }
+                </tr>
+            }
+            <tr style="text-align: right; font-weight: bold; color: red;">
+                <td colspan="4" style="vertical-align: middle; display: table-cell;">
+                    Tổng số lượng người: <br />
+                    Tổng tiền:
+                </td>
+                <td colspan="2" style="vertical-align: middle; display: table-cell;">
+                    @ViewBag.TotalQuantity <br />
+                    @String.Format("{0:0,0}", ViewBag.TotalCost) VNĐ
+                </td>
+            </tr>
+        </table>
+
+        <br /><br />
+        <h2 style="text-align: center">THÔNG TIN KHÁCH HÀNG</h2>
+        @{
+            //User user = (User)Session["User"];
+            var user = (Nhom6_TourDuLich.Sessions.UserSession)Session[Nhom6_TourDuLich.Sessions.SessionConnection.CUSTOMER_SESSION];
+            //Bill bill = new Bill();
+        }
+        @using (Html.BeginForm())
+        {
+            @*@Html.ValidationSummary(true)*@
+
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td style="width:50%; font-weight:bold; text-align:right; padding-right:20px">Họ tên: </td>
+                    <td>@user.FullName</td>
+                </tr>
+                <tr>
+                    <td style="width: 50%; font-weight: bold; text-align: right; padding-right: 20px">Email: </td>
+                    <td>@user.Email</td>
+                </tr>
+                <tr>
+                    <td style="width: 50%; font-weight: bold; text-align: right; padding-right: 20px">Số điện thoại: </td>
+                    <td>@user.PhoneNumber</td>
+                </tr>
+                <tr>
+                    <td style="width:50%; font-weight: bold; text-align: right; padding-right: 20px">Ngày đặt: </td>
+                    <td>@DateTime.Now.ToShortDateString()</td>
+                </tr>
+                <tr>
+                    <td style="width: 50%; font-weight: bold; text-align: right; padding-right: 20px">Ghi chú:</td>
+                    <td><textarea rows="3" wrap="soft" name="Note"></textarea></td>
+                </tr>
+            </table>
+            <br />
+            <div>
+                <span style="font-weight: bold; margin-left: 20%">
+                    Phương thức thanh toán:
+                    <select name="sPayMethod" style="margin-left:20px">
+                        <option selected="selected">Thanh toán trực tiếp</option>
+                        <option>Thanh toán bằng thẻ</option>
+                    </select>
+                </span>
+            </div>
+            <br />
+            <div class="button">
+                <div class="btn-back">
+                    <a href="@Url.Action("Cart", "Cart")"><i class="fas fa-angle-double-left"></i>Trở về</a>
+                </div>
+                <div class="btn-next">
+                    <button type="submit" style="background-color: transparent; border:0px"><a id="btn-next" style="color: #FFF">Xác nhận thanh toán <i class="fas fa-angle-double-right"></i></a></button>
+                </div>
+            </div>
+
+        }
+    </div>
+</body>
+</html>

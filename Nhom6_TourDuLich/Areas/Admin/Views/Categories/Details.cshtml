@@ -1,0 +1,51 @@
+﻿@model Nhom6_TourDuLich.Models.Category
+
+@{
+    ViewBag.Title = "Chi tiết danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chi tiết danh mục</h2>
+<h4>Danh mục</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body" id="category-action">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <tr>
+                                <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.CategoryName):</td>
+                                <td>@Html.DisplayFor(model => model.CategoryName)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.Quantity):</td>
+                                <td>@Html.DisplayFor(model => model.Quantity)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">@Html.DisplayNameFor(model => model.Images):</td>
+                                <td>
+                                        @{
+                                            string ImagePath = "~/wwwroot/images/imgCategory/" + Model.Images;
+                                        }
+                                        <img src="@Url.Content(ImagePath)" width="100" class="img-responsive" />
+                                        <br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <a href="@Url.Action("Index","Categories") " class="btn btn-danger ml-2">Quay lại</a>
+                                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDCategory }, new { @class = "btn btn-warning" }) 
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,53 @@
+﻿@model Nhom6_TourDuLich.Areas.Admin.Data.LoginModel
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VietTravel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/wwwroot/Client/css/style.css">
+    <style>
+        .error {
+            height: 20px;
+            color: red;
+            padding: 0px 50px;
+            font-size: 12pt;
+        }
+    </style>
+</head>
+<body>
+    <!-- partial:index.partial.html -->
+    <div class="container" style="background-color: #fff;">
+        <!-- Heading -->
+        <h1><b>Đăng nhập</b></h1>
+        @if (ViewBag.Error != null)
+        {
+            <h4 style="text-align:center; color:red" class="alert alert-danger" role="alert">@ViewBag.Error</h4>
+        }
+        <!-- Form -->
+        @using (Html.BeginForm("Login", "Users", FormMethod.Post, new { @class = "text-start" }))
+        {
+            @Html.AntiForgeryToken()
+            <!-- tên đăng nhập -->
+            <div class="input__block">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "input", @autofocus = "", @placeholder = "Tên đăng nhập" })
+                <div class="error">@Html.ValidationMessageFor(m => m.UserName)</div>
+            </div>
+            <!-- mật khẩu -->
+            <div class="input__block">
+                @Html.PasswordFor(m => m.Passwords, new { @class = "input", @autofocus = "", @placeholder = "Mật khẩu" })
+                <div class="error">@Html.ValidationMessageFor(m => m.Passwords)</div>
+            </div>
+            <!-- sign in button -->
+            <button class="signin__btn">
+                <strong>Đăng nhập</strong>
+            </button>
+
+
+        }
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src="~/wwwroot/Admin/libs/js/main-js.js"></script>
+</body>
+</html>
